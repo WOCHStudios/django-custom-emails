@@ -1,0 +1,12 @@
+# PyCharm files
+.idea/*
+
+
+# Log files
+*.log
+logs
+
+
+# Basics
+*.py[cod]
+__pycache__
