@@ -3,11 +3,10 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.db import models
 
-from scout.users.models import User
 
 
 TEMPLATE_CHOICES = (
-    ('emails/generic_invite.html', 'Generic'),
+    ('emails/default_email.html', 'Generic'),
 )
 
 
@@ -16,7 +15,7 @@ class Email(models.Model):
     subject = models.CharField(max_length=255)
     from_email = models.CharField(max_length=255)
     to_email = models.CharField(max_length=255, blank=True)
-    template = models.CharField(max_length=255, choices=TEMPLATE_CHOICES, default='emails/generic_invite.html')
+    template = models.CharField(max_length=255, choices=TEMPLATE_CHOICES, default='emails/default_email.html')
 
     class Meta:
         abstract = True
@@ -30,22 +29,17 @@ class Email(models.Model):
         return
 
 
-class InvitationEmail(Email):
-    user = models.OneToOneField(User)
-    from_email = "invitations@totallacrossenetwork.com"
 
-    def send(self):
-        password = User.objects.make_random_password()
-        self.user.set_password(password)
-        self.user.save()
-        context = {'user': self.user, 'password': password}
-        super(InvitationEmail, self).send(context)
+class DefaultEmail(Email):
+    from_email = "default@example.com"
 
     def save(self):
-        print("Email save called")
-        self.to_email = self.user.email
-        self.send()
-        super(InvitationEmail, self).save()
+        context = {'text': 'HelloWorld'}
+        self.send(context)
+        super(DefaultEmail, self).save()
 
     def __str__(self):
-        return self.user.username
+        return self.to_email
+
+# Create custom Email models here.
+
