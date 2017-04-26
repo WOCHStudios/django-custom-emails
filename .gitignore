@@ -10,3 +10,8 @@ logs
 # Basics
 *.py[cod]
 __pycache__
+
+
+# Distribution Files
+dist/*
+django_custom_emails.egg-info/*
