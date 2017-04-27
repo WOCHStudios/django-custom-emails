@@ -8,7 +8,7 @@ This is a simple django app to send emails through the django admin console.
 Quick start
 -----------
 
-1. Add "polls" to your INSTALLED_APPS setting like this::
+1. Add "emails" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         ...
